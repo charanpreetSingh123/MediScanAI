@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+venv/
+.env
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+.env.local
+
+# ML Models
+*.pth
+*.h5
+*.pkl
+
+# Datasets
+backend/datasets/
+
+# Uploads
+backend/uploads/
+
+# Reports
+reports/
+
+# Mac
+.DS_Store
+
+# VS Code
+.vscode/
