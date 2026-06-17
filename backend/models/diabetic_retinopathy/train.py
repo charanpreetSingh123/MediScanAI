@@ -10,14 +10,13 @@ import pandas as pd
 import os
 
 # Config
-DATASET_PATH = "../../datasets/diabetic_retinopathy/aptos2019-blindness-detection"
-CSV_PATH = "../../datasets/diabetic_retinopathy/aptos2019-blindness-detection/train.csv"
-IMG_DIR = "../../datasets/diabetic_retinopathy/aptos2019-blindness-detection/train_images"
+DATASET_PATH = "../../datasets/brain_tumor/Training"  # Point directly to Training folder
+TEST_PATH = "../../datasets/brain_tumor/Testing"
 BATCH_SIZE = 32
 EPOCHS = 15
-LR = 0.0005
-NUM_CLASSES = 5
-SAVE_PATH = "diabetic_retinopathy_model.pth"
+LR = 0.0003
+NUM_CLASSES = 4
+SAVE_PATH = "brain_tumor_model.pth"
 
 # Custom Dataset for APTOS (CSV based)
 class APTOSDataset(Dataset):
@@ -78,7 +77,7 @@ print(f"Using device: {device}")
 # Model
 model = DiabeticRetinopathyModel(num_classes=NUM_CLASSES).to(device)
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=LR)
+optimizer = torch.optim.Adam(model.parameters(), lr=LR, weight_decay=1e-4)
 scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS)
 
 best_val_acc = 0.0
