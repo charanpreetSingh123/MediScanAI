@@ -259,7 +259,7 @@ Once the backend is running, visit:
 B.Tech CSE (AIML)
 
 [![GitHub](https://img.shields.io/badge/GitHub-charanpreetSingh123-24292e?style=flat-square&logo=github)](https://github.com/charanpreetSingh123)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Charanpreet-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/charanpreet-singh-7358032b9/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Charanpreet_Singh-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/charanpreet-singh-7358032b9/)
 
 ---
 
