@@ -6,6 +6,8 @@
 <img src="https://img.shields.io/badge/FastAPI%20%7C%20React-Full%20Stack-534AB7?style=for-the-badge&logo=fastapi&logoColor=white" alt="FastAPI React"/>
 <img src="https://img.shields.io/badge/PyTorch%20%7C%20EfficientNet-ML%20Powered-D85A30?style=for-the-badge&logo=pytorch&logoColor=white" alt="ML"/>
 <img src="https://img.shields.io/badge/Docker-Containerized-185FA5?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
+<img src="https://img.shields.io/badge/Brain%20Tumor-94%25%20Accuracy-success?style=for-the-badge" alt="Brain Tumor Accuracy"/>
+<img src="https://img.shields.io/badge/Diabetic%20Retinopathy-81.5%25%20Accuracy-success?style=for-the-badge" alt="DR Accuracy"/>
 
 <br/><br/>
 
@@ -65,6 +67,17 @@ Built for doctors and patients who need fast, explainable, and accurate AI-assis
 | 🧠 Brain Tumor | EfficientNet-B0 | Brain MRI Dataset (7,200 images) | Glioma, Meningioma, Pituitary, No Tumor |
 | 👁️ Diabetic Retinopathy | ResNet50 | APTOS 2019 (3,662 images) | 5 severity levels (0-4) |
 | 🩺 Skin Cancer | EfficientNet-B2 | ISIC 2019 (25,000+ images) | MEL, NV, BCC, AK, BKL, DF, VASC, SCC |
+
+---
+## 🤖 ML Models & Results
+
+| Disease | Model Architecture | Dataset | Classes | Validation Accuracy |
+|---|---|---|---|---|
+| 🧠 Brain Tumor | EfficientNet-B0 | Brain MRI Dataset (7,200 images) | Glioma, Meningioma, Pituitary, No Tumor | **94%** ✅ |
+| 👁️ Diabetic Retinopathy | ResNet50 | APTOS 2019 (3,662 images) | 5 severity levels (0-4) | **81.56%** ✅ |
+| 🩺 Skin Cancer | EfficientNet-B2 | ISIC 2019 (25,331 images) | MEL, NV, BCC, AK, BKL, DF, VASC, SCC | **In Progress** ⏳ |
+
+> All models use transfer learning with a freeze-then-finetune strategy: classifier head trained first on frozen pretrained weights, then full network fine-tuned at a lower learning rate for better generalization.
 
 ---
 
