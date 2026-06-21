@@ -235,8 +235,8 @@ Once the backend is running, visit:
 ## 🌱 What This Platform Enables
 
 ✅  Detect Brain Tumors from MRI scans with high accuracy
-✅  Grade Diabetic Retinopathy severity from eye images
-✅  Identify cancerous skin lesions from dermoscopy images
+✅ Grade Diabetic Retinopathy severity from eye images
+✅ Identify cancerous skin lesions from dermoscopy images
 ✅  Visualize AI decisions with Grad-CAM heatmaps
 ✅  Role-based access for Doctors and Patients
 ✅  Generate downloadable PDF medical reports
