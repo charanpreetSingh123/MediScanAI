@@ -84,7 +84,23 @@ Built for doctors and patients who need fast, explainable, and accurate AI-assis
 
 ## 📸 Screenshots
 
-> Coming soon — will be added after deployment.
+### Analytics
+![Analytics](assets/analytics.png)
+
+### Upload Section
+![Upload Scan](assets/uploadscan.png)
+
+### Example Test For Brain Tumor
+![Test](assets/exampletest.png)
+
+### Test History
+![History Of Results](assets/history.png)
+
+### Training Accuracy
+![Accuracy of Model](assets/trainingresult.png)
+
+### Operations Reflection 
+![Terminal](assets/operations.png)
 
 ---
 
