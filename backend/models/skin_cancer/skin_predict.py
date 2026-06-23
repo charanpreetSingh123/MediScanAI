@@ -3,9 +3,16 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 import torch
 import os
+import importlib.util
 from torchvision import transforms
 from PIL import Image
-from model import SkinCancerModel
+
+this_dir = os.path.dirname(os.path.abspath(__file__))
+
+spec = importlib.util.spec_from_file_location("skin_model_def", os.path.join(this_dir, "model.py"))
+skin_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(skin_module)
+SkinCancerModel = skin_module.SkinCancerModel
 
 CLASS_NAMES = ["MEL", "NV", "BCC", "AK", "BKL", "DF", "VASC", "SCC"]
 CLASS_FULL_NAMES = {
@@ -19,7 +26,7 @@ CLASS_FULL_NAMES = {
     "SCC": "Squamous Cell Carcinoma"
 }
 BENIGN_CLASSES = ["NV", "BKL", "DF", "VASC"]
-MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "skin_cancer_model.pth")
+MODEL_PATH = os.path.join(this_dir, "skin_cancer_model.pth")
 
 device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 

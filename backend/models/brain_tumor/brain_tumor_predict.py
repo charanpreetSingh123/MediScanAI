@@ -3,12 +3,20 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 import torch
 import os
+import importlib.util
 from torchvision import transforms
 from PIL import Image
-from model import BrainTumorModel
+
+this_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Load model.py directly by file path — avoids module cache conflict
+spec = importlib.util.spec_from_file_location("brain_tumor_model_def", os.path.join(this_dir, "model.py"))
+brain_tumor_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(brain_tumor_module)
+BrainTumorModel = brain_tumor_module.BrainTumorModel
 
 CLASS_NAMES = ["Glioma", "Meningioma", "No Tumor", "Pituitary"]
-MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "brain_tumor_model.pth")
+MODEL_PATH = os.path.join(this_dir, "brain_tumor_model.pth")
 
 device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 

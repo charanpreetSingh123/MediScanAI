@@ -3,12 +3,19 @@ ssl._create_default_https_context = ssl._create_unverified_context
 
 import torch
 import os
+import importlib.util
 from torchvision import transforms
 from PIL import Image
-from model import DiabeticRetinopathyModel
+
+this_dir = os.path.dirname(os.path.abspath(__file__))
+
+spec = importlib.util.spec_from_file_location("dr_model_def", os.path.join(this_dir, "model.py"))
+dr_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(dr_module)
+DiabeticRetinopathyModel = dr_module.DiabeticRetinopathyModel
 
 CLASS_NAMES = ["No DR", "Mild", "Moderate", "Severe", "Proliferative DR"]
-MODEL_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "diabetic_retinopathy_model.pth")
+MODEL_PATH = os.path.join(this_dir, "diabetic_retinopathy_model.pth")
 
 device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
 

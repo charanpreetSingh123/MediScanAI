@@ -1,15 +1,18 @@
-from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
+from fastapi import APIRouter, UploadFile, File, Depends
 from sqlalchemy.orm import Session
 from database import get_db
 from auth import get_current_user
 from models.user import User
 from models.scan import Scan
-import shutil, os, uuid, sys
+import shutil, os, uuid, sys, importlib.util
 
 router = APIRouter()
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODELS_DIR = os.path.join(BASE_DIR, "..", "models")
 
 def save_file(file: UploadFile) -> str:
     ext = file.filename.split(".")[-1]
@@ -19,6 +22,13 @@ def save_file(file: UploadFile) -> str:
         shutil.copyfileobj(file.file, buffer)
     return path
 
+def load_predict_function(disease_folder: str, predict_filename: str):
+    predict_path = os.path.join(MODELS_DIR, disease_folder, predict_filename)
+    spec = importlib.util.spec_from_file_location(f"{disease_folder}_predict", predict_path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module.predict
+
 @router.post("/brain-tumor")
 async def predict_brain_tumor(
     file: UploadFile = File(...),
@@ -27,8 +37,7 @@ async def predict_brain_tumor(
 ):
     path = save_file(file)
     try:
-        sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "models", "brain_tumor"))
-        from brain_tumor_predict import predict
+        predict = load_predict_function("brain_tumor", "brain_tumor_predict.py")
         prediction = predict(path)
     except Exception as e:
         print(f"Brain tumor prediction error: {e}")
@@ -62,8 +71,7 @@ async def predict_dr(
 ):
     path = save_file(file)
     try:
-        sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "models", "diabetic_retinopathy"))
-        from dr_predict import predict
+        predict = load_predict_function("diabetic_retinopathy", "dr_predict.py")
         prediction = predict(path)
     except Exception as e:
         print(f"DR prediction error: {e}")
@@ -97,8 +105,7 @@ async def predict_skin_cancer(
 ):
     path = save_file(file)
     try:
-        sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "models", "skin_cancer"))
-        from skin_predict import predict
+        predict = load_predict_function("skin_cancer", "skin_predict.py")
         prediction = predict(path)
     except Exception as e:
         print(f"Skin cancer prediction error: {e}")
