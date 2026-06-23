@@ -84,23 +84,17 @@ Built for doctors and patients who need fast, explainable, and accurate AI-assis
 
 ## 📸 Screenshots
 
-### Analytics
-![Analytics](assets/analytics.png)
+| Analytics | Upload Section |
+|:---:|:---:|
+| ![Analytics](assets/analytics.png) | ![Upload Scan](assets/uploadscan.png) |
 
-### Upload Section
-![Upload Scan](assets/uploadscan.png)
+| Example Test For Brain Tumor | Test History |
+|:---:|:---:|
+| ![Test](assets/exampletest.png) | ![History Of Results](assets/history.png) |
 
-### Example Test For Brain Tumor
-![Test](assets/exampletest.png)
-
-### Test History
-![History Of Results](assets/history.png)
-
-### Training Accuracy
-![Accuracy of Model](assets/trainingresult.png)
-
-### Operations Reflection 
-![Terminal](assets/operations.png)
+| Training Accuracy | Operations Reflection |
+|:---:|:---:|
+| ![Accuracy of Model](assets/trainingresult.png) | ![Terminal](assets/operations.png) |
 
 ---
 
