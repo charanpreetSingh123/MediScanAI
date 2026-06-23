@@ -1,38 +1,53 @@
 import { useEffect, useState } from "react";
 import { getAllPatients } from "../../utils/api";
-import Loader from "../Common/Loader";
-import { User } from "lucide-react";
 
 const PatientList = () => {
   const [patients, setPatients] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAllPatients()
-      .then((res) => setPatients(res.data))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    getAllPatients().then(res => setPatients(res.data)).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <Loader text="Loading patients..." />;
-
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6">
-      <h2 className="text-lg font-semibold text-slate-800 mb-5">All Patients ({patients.length})</h2>
-      {patients.length === 0 ? (
-        <p className="text-slate-400 text-sm text-center py-8">No patients registered yet.</p>
+    <div style={{
+      background: "white", borderRadius: "16px", padding: "28px",
+      border: "1px solid #f1f5f9", boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+      fontFamily: "Inter, sans-serif"
+    }}>
+      <div style={{ marginBottom: "24px" }}>
+        <h2 style={{ fontSize: "18px", fontWeight: "700", color: "#0f172a", margin: "0 0 4px" }}>Patients</h2>
+        <p style={{ fontSize: "13px", color: "#94a3b8", margin: 0 }}>{patients.length} registered patients</p>
+      </div>
+
+      {loading ? (
+        <p style={{ color: "#94a3b8", textAlign: "center", padding: "40px" }}>Loading...</p>
+      ) : patients.length === 0 ? (
+        <p style={{ color: "#94a3b8", textAlign: "center", padding: "40px" }}>No patients yet.</p>
       ) : (
-        <div className="flex flex-col gap-3">
+        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
           {patients.map((p) => (
-            <div key={p.id} className="flex items-center gap-4 p-4 rounded-lg bg-slate-50 border border-slate-100">
-              <div className="bg-blue-100 p-2 rounded-full">
-                <User className="text-blue-600" size={18} />
+            <div key={p.id} style={{
+              display: "flex", alignItems: "center", gap: "14px",
+              padding: "16px", borderRadius: "12px",
+              border: "1px solid #f1f5f9", background: "#fafafa"
+            }}>
+              <div style={{
+                width: "42px", height: "42px", borderRadius: "50%",
+                background: "linear-gradient(135deg, #1e40af, #3b82f6)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "white", fontWeight: "700", fontSize: "16px", flexShrink: 0
+              }}>
+                {p.name.charAt(0).toUpperCase()}
               </div>
-              <div>
-                <p className="text-sm font-semibold text-slate-800">{p.name}</p>
-                <p className="text-xs text-slate-400">{p.email}</p>
+              <div style={{ flex: 1 }}>
+                <p style={{ fontSize: "14px", fontWeight: "600", color: "#0f172a", margin: "0 0 2px" }}>{p.name}</p>
+                <p style={{ fontSize: "13px", color: "#94a3b8", margin: 0 }}>{p.email}</p>
               </div>
-              <span className="ml-auto text-xs bg-blue-50 text-blue-600 px-2 py-1 rounded-full font-medium">
+              <span style={{
+                fontSize: "12px", fontWeight: "600", color: "#3b82f6",
+                background: "#eff6ff", padding: "4px 10px", borderRadius: "20px"
+              }}>
                 ID #{p.id}
               </span>
             </div>

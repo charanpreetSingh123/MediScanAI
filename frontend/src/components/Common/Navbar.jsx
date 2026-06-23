@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import { LogOut, Activity } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -12,22 +11,67 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between shadow-sm">
-      <div className="flex items-center gap-2">
-        <Activity className="text-blue-600" size={24} />
-        <span className="text-xl font-bold text-slate-800">MediScan <span className="text-blue-600">AI</span></span>
-      </div>
-      <div className="flex items-center gap-4">
-        <div className="text-right">
-          <p className="text-sm font-semibold text-slate-800">{name}</p>
-          <p className="text-xs text-slate-500 capitalize">{role}</p>
+    <nav style={{
+      background: "white",
+      borderBottom: "1px solid #f1f5f9",
+      padding: "0 28px",
+      height: "64px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
+      position: "sticky",
+      top: 0,
+      zIndex: 100,
+      fontFamily: "Inter, sans-serif"
+    }}>
+      {/* Logo */}
+      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+        <div style={{
+          width: "36px", height: "36px", borderRadius: "10px",
+          background: "linear-gradient(135deg, #1e40af, #3b82f6)",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: "18px"
+        }}>
+          🏥
         </div>
+        <span style={{ fontSize: "18px", fontWeight: "700", color: "#0f172a" }}>
+          MediScan <span style={{ color: "#3b82f6" }}>AI</span>
+        </span>
+      </div>
+
+      {/* Right side */}
+      <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+        <div style={{
+          display: "flex", alignItems: "center", gap: "10px",
+          background: "#f8fafc", padding: "8px 14px", borderRadius: "10px",
+          border: "1px solid #f1f5f9"
+        }}>
+          <div style={{
+            width: "32px", height: "32px", borderRadius: "50%",
+            background: "linear-gradient(135deg, #1e40af, #3b82f6)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            color: "white", fontSize: "13px", fontWeight: "700"
+          }}>
+            {name?.charAt(0)?.toUpperCase()}
+          </div>
+          <div>
+            <p style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a", margin: 0 }}>{name}</p>
+            <p style={{ fontSize: "11px", color: "#94a3b8", margin: 0, textTransform: "capitalize" }}>{role}</p>
+          </div>
+        </div>
+
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2 bg-red-50 text-red-600 px-3 py-2 rounded-lg hover:bg-red-100 transition text-sm font-medium"
+          style={{
+            display: "flex", alignItems: "center", gap: "6px",
+            background: "#fef2f2", color: "#ef4444",
+            padding: "8px 14px", borderRadius: "10px",
+            border: "1px solid #fee2e2", cursor: "pointer",
+            fontSize: "13px", fontWeight: "600", fontFamily: "Inter, sans-serif"
+          }}
         >
-          <LogOut size={16} />
-          Logout
+          ↩ Logout
         </button>
       </div>
     </nav>

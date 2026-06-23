@@ -1,56 +1,77 @@
 import { useEffect, useState } from "react";
 import { getAllScans } from "../../utils/api";
-import Loader from "../Common/Loader";
-import { FileText, AlertTriangle, CheckCircle } from "lucide-react";
 
 const ReportViewer = () => {
   const [scans, setScans] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAllScans()
-      .then((res) => setScans(res.data))
-      .catch(() => {})
-      .finally(() => setLoading(false));
+    getAllScans().then(res => setScans(res.data)).catch(() => {}).finally(() => setLoading(false));
   }, []);
 
-  if (loading) return <Loader text="Loading reports..." />;
-
   return (
-    <div className="bg-white rounded-xl border border-slate-200 p-6">
-      <h2 className="text-lg font-semibold text-slate-800 mb-5">All Scan Reports ({scans.length})</h2>
-      {scans.length === 0 ? (
-        <p className="text-slate-400 text-sm text-center py-8">No reports yet.</p>
+    <div style={{
+      background: "white", borderRadius: "16px", padding: "28px",
+      border: "1px solid #f1f5f9", boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+      fontFamily: "Inter, sans-serif"
+    }}>
+      <div style={{ marginBottom: "24px" }}>
+        <h2 style={{ fontSize: "18px", fontWeight: "700", color: "#0f172a", margin: "0 0 4px" }}>
+          Scan Reports
+        </h2>
+        <p style={{ fontSize: "13px", color: "#94a3b8", margin: 0 }}>
+          {scans.length} total records
+        </p>
+      </div>
+
+      {loading ? (
+        <p style={{ color: "#94a3b8", textAlign: "center", padding: "40px" }}>Loading...</p>
+      ) : scans.length === 0 ? (
+        <p style={{ color: "#94a3b8", textAlign: "center", padding: "40px" }}>No reports yet.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
-              <tr className="border-b border-slate-100">
-                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500">ID</th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500">Patient</th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500">Disease</th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500">Result</th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500">Confidence</th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-slate-500">Date</th>
+              <tr style={{ borderBottom: "2px solid #f1f5f9" }}>
+                {["ID", "Patient", "Disease", "Result", "Confidence", "Date"].map(h => (
+                  <th key={h} style={{ padding: "10px 16px", textAlign: "left", fontSize: "12px", fontWeight: "600", color: "#94a3b8", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                    {h}
+                  </th>
+                ))}
               </tr>
             </thead>
             <tbody>
               {scans.map((scan) => (
-                <tr key={scan.id} className="border-b border-slate-50 hover:bg-slate-50">
-                  <td className="py-3 px-4 text-slate-500">#{scan.id}</td>
-                  <td className="py-3 px-4 text-slate-700">Patient #{scan.patient_id}</td>
-                  <td className="py-3 px-4 text-slate-700 capitalize">{scan.disease_type.replace(/_/g, " ")}</td>
-                  <td className="py-3 px-4">
-                    <span className={`flex items-center gap-1 text-xs font-semibold w-fit px-2 py-1 rounded-full
-                      ${scan.result === "Positive" ? "bg-red-100 text-red-600" : "bg-green-100 text-green-600"}`}>
-                      {scan.result === "Positive"
-                        ? <AlertTriangle size={12} />
-                        : <CheckCircle size={12} />}
-                      {scan.result}
+                <tr key={scan.id} style={{ borderBottom: "1px solid #f8fafc" }}
+                  onMouseEnter={e => e.currentTarget.style.background = "#f8fafc"}
+                  onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+                >
+                  <td style={{ padding: "14px 16px", fontSize: "13px", color: "#94a3b8", fontWeight: "600" }}>#{scan.id}</td>
+                  <td style={{ padding: "14px 16px", fontSize: "14px", color: "#0f172a", fontWeight: "500" }}>Patient #{scan.patient_id}</td>
+                  <td style={{ padding: "14px 16px" }}>
+                    <span style={{
+                      fontSize: "13px", fontWeight: "500", padding: "4px 10px", borderRadius: "20px",
+                      background: scan.disease_type === "brain_tumor" ? "#eff6ff" : scan.disease_type === "diabetic_retinopathy" ? "#f5f3ff" : "#fdf2f8",
+                      color: scan.disease_type === "brain_tumor" ? "#1d4ed8" : scan.disease_type === "diabetic_retinopathy" ? "#7c3aed" : "#be185d"
+                    }}>
+                      {scan.disease_type.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase())}
                     </span>
                   </td>
-                  <td className="py-3 px-4 text-slate-700">{scan.confidence}%</td>
-                  <td className="py-3 px-4 text-slate-400">{new Date(scan.created_at).toLocaleDateString()}</td>
+                  <td style={{ padding: "14px 16px" }}>
+                    <span style={{
+                      fontSize: "13px", fontWeight: "600", padding: "4px 10px", borderRadius: "20px",
+                      background: scan.result === "Positive" ? "#fef2f2" : scan.result === "Negative" ? "#f0fdf4" : "#f8fafc",
+                      color: scan.result === "Positive" ? "#ef4444" : scan.result === "Negative" ? "#22c55e" : "#94a3b8"
+                    }}>
+                      {scan.result === "Positive" ? "⚠️ " : scan.result === "Negative" ? "✅ " : "⏳ "}{scan.result}
+                    </span>
+                  </td>
+                  <td style={{ padding: "14px 16px", fontSize: "14px", color: "#0f172a", fontWeight: "600" }}>
+                    {scan.confidence > 0 ? `${scan.confidence}%` : "—"}
+                  </td>
+                  <td style={{ padding: "14px 16px", fontSize: "13px", color: "#94a3b8" }}>
+                    {new Date(scan.created_at).toLocaleDateString()}
+                  </td>
                 </tr>
               ))}
             </tbody>
