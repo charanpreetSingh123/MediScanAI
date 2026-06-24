@@ -84,6 +84,10 @@ Built for doctors and patients who need fast, explainable, and accurate AI-assis
 
 ## 📸 Screenshots
 
+| Doctor Portal | Patient Portal |
+|:---:|:---:|
+| ![Doctor Dashboard](assets/Doctordashboard.png) | ![Patient Dashboard](assets/patient.png) |
+
 | Analytics | Upload Section |
 |:---:|:---:|
 | ![Analytics](assets/analytics.png) | ![Upload Scan](assets/uploadscan.png) |
