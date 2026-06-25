@@ -7,7 +7,7 @@
 <img src="https://img.shields.io/badge/PyTorch%20%7C%20EfficientNet-ML%20Powered-D85A30?style=for-the-badge&logo=pytorch&logoColor=white" alt="ML"/>
 <img src="https://img.shields.io/badge/Docker-Containerized-185FA5?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"/>
 <img src="https://img.shields.io/badge/Brain%20Tumor-94%25%20Accuracy-success?style=for-the-badge" alt="Brain Tumor Accuracy"/>
-<img src="https://img.shields.io/badge/Diabetic%20Retinopathy-81.5%25%20Accuracy-success?style=for-the-badge" alt="DR Accuracy"/>
+<img src="https://img.shields.io/badge/Diabetic%20Retinopathy-81.56%25%20Accuracy-success?style=for-the-badge" alt="DR Accuracy"/>
 <img src="https://img.shields.io/badge/Skin%20Cancer-78%25%20Accuracy-success?style=for-the-badge" alt="Skin Cancer Accuracy"/>
 
 <br/><br/>
@@ -16,7 +16,7 @@
 
 ### Multi-Disease Early Detection Platform
 
-**An end-to-end AI-powered medical diagnosis platform that detects Brain Tumors, Diabetic Retinopathy, and Skin Cancer from medical scans.**  
+**An end-to-end AI-powered medical diagnosis platform that detects Brain Tumors, Diabetic Retinopathy, and Skin Cancer from medical scans.**
 Built for doctors and patients who need fast, explainable, and accurate AI-assisted diagnosis.
 
 <br/>
@@ -37,12 +37,13 @@ Built for doctors and patients who need fast, explainable, and accurate AI-assis
 |---|---|
 | 🧠 **Brain Tumor Detection** | Analyzes MRI scans and classifies into Glioma, Meningioma, Pituitary, or No Tumor |
 | 👁️ **Diabetic Retinopathy** | Detects severity levels (No DR → Proliferative DR) from eye fundus images |
-| 🩺 **Skin Cancer Detection** | Identifies 7+ types of skin lesions including Melanoma and Basal Cell Carcinoma |
+| 🩺 **Skin Cancer Detection** | Identifies 8 types of skin lesions including Melanoma and Basal Cell Carcinoma |
 | 🔥 **Grad-CAM Heatmaps** | Explainable AI — highlights exactly which region the model focused on |
 | 👨‍⚕️ **Doctor Dashboard** | Upload scans, view all patients, analyze reports, and track statistics |
 | 🧑‍💼 **Patient Dashboard** | Upload own scans, get results in simple language, track scan history |
 | 📄 **PDF Report Generation** | Auto-generates downloadable medical reports for every scan |
 | 🔐 **JWT Authentication** | Secure role-based login system for Doctors and Patients |
+| 🐳 **Docker Deployment** | One command to start the entire platform — no manual setup needed |
 
 ---
 
@@ -61,24 +62,15 @@ Built for doctors and patients who need fast, explainable, and accurate AI-assis
 
 ---
 
-## 🤖 ML Models
-
-| Disease | Model Architecture | Dataset | Classes |
-|---|---|---|---|
-| 🧠 Brain Tumor | EfficientNet-B0 | Brain MRI Dataset (7,200 images) | Glioma, Meningioma, Pituitary, No Tumor |
-| 👁️ Diabetic Retinopathy | ResNet50 | APTOS 2019 (3,662 images) | 5 severity levels (0-4) |
-| 🩺 Skin Cancer | EfficientNet-B2 | ISIC 2019 (25,000+ images) | MEL, NV, BCC, AK, BKL, DF, VASC, SCC |
-
----
 ## 🤖 ML Models & Results
 
-| Disease | Model Architecture | Dataset | Classes | Validation Accuracy |
+| Disease | Model | Dataset | Classes | Accuracy |
 |---|---|---|---|---|
 | 🧠 Brain Tumor | EfficientNet-B0 | Brain MRI Dataset (7,200 images) | Glioma, Meningioma, Pituitary, No Tumor | **94%** ✅ |
-| 👁️ Diabetic Retinopathy | ResNet50 | APTOS 2019 (3,662 images) | 5 severity levels (0-4) | **81.56%** ✅ |
+| 👁️ Diabetic Retinopathy | ResNet50 | APTOS 2019 (3,662 images) | 5 severity levels (No DR → Proliferative DR) | **81.56%** ✅ |
 | 🩺 Skin Cancer | EfficientNet-B2 | ISIC 2019 (25,331 images) | MEL, NV, BCC, AK, BKL, DF, VASC, SCC | **78%** ✅ |
 
-> All models use transfer learning with a freeze-then-finetune strategy: classifier head trained first on frozen pretrained weights, then full network fine-tuned at a lower learning rate for better generalization.
+> All models use **transfer learning** with a freeze-then-finetune strategy — classifier head trained first on frozen pretrained weights, then full network fine-tuned at a lower learning rate for better generalization.
 
 ---
 
@@ -102,16 +94,48 @@ Built for doctors and patients who need fast, explainable, and accurate AI-assis
 
 ---
 
-## 🚀 Quick Start
+## 🐳 Quick Start with Docker (Recommended)
+
+> One command starts everything — PostgreSQL + FastAPI + React — no manual setup needed!
 
 ### Prerequisites
+- [Docker Desktop](https://www.docker.com/products/docker-desktop) installed and running
 
+### Run in 3 steps
+
+**1. Clone the repository**
+```bash
+git clone https://github.com/charanpreetSingh123/MediScanAI.git
+cd MediScanAI
+```
+
+**2. Start everything**
+```bash
+docker compose up
+```
+
+**3. Open the app**
+
+| Service | URL |
+|---|---|
+| 🎨 **App** | http://localhost:4173 |
+| ⚡ **API** | http://localhost:8000 |
+| 📖 **API Docs** | http://localhost:8000/docs |
+
+**To stop:**
+```bash
+docker compose down
+```
+
+---
+
+## 🛠️ Manual Setup (Without Docker)
+
+### Prerequisites
 - Python 3.10+
 - Node.js 18+
 - PostgreSQL
 - Git
-
-### Setup in 6 steps
 
 **1. Clone the repository**
 ```bash
@@ -129,7 +153,7 @@ pip install -r requirements.txt
 
 **3. Setup environment variables**
 ```bash
-# Create backend/.env
+# Create backend/.env with:
 DATABASE_URL=postgresql://postgres:password@localhost:5432/mediscanai
 SECRET_KEY=mediscanai_super_secret_key_2024
 ALGORITHM=HS256
@@ -145,25 +169,25 @@ GRANT ALL PRIVILEGES ON DATABASE mediscanai TO postgres;
 \q
 ```
 
-**5. Start the backend**
+**5. Start Backend**
 ```bash
 uvicorn main:app --reload
 ```
 
-**6. Setup & start Frontend** *(new terminal)*
+**6. Setup & Start Frontend**
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-Visit **http://localhost:5173** to open the app.
+Visit **http://localhost:5173**
 
 ---
 
 ## 🧠 Training the Models
 
-Download datasets from Kaggle and place them in `backend/datasets/`:
+Download datasets from Kaggle and place in `backend/datasets/`:
 
 | Disease | Dataset | Link |
 |---|---|---|
@@ -171,19 +195,12 @@ Download datasets from Kaggle and place them in `backend/datasets/`:
 | Diabetic Retinopathy | APTOS 2019 | [kaggle.com](https://www.kaggle.com/competitions/aptos2019-blindness-detection) |
 | Skin Cancer | ISIC 2019 | [kaggle.com](https://www.kaggle.com/datasets/andrewmvd/isic-2019) |
 
-Then train each model:
-
 ```bash
 cd backend
 source venv/bin/activate
 
-# Brain Tumor
 cd models/brain_tumor && python3 train.py
-
-# Diabetic Retinopathy
 cd ../diabetic_retinopathy && python3 train.py
-
-# Skin Cancer
 cd ../skin_cancer && python3 train.py
 ```
 
@@ -220,11 +237,10 @@ MediScanAI/
 ├── README.md
 └── .gitignore
 ```
+
 ---
 
 ## 📌 API Documentation
-
-Once the backend is running, visit:
 
 | Interface | URL |
 |---|---|
@@ -249,14 +265,14 @@ Once the backend is running, visit:
 
 ## 🌱 What This Platform Enables
 
-✅  Detect Brain Tumors from MRI scans with high accuracy
-✅ Grade Diabetic Retinopathy severity from eye images
-✅ Identify cancerous skin lesions from dermoscopy images
+✅  Detect Brain Tumors from MRI scans — 94% accuracy
+✅  Grade Diabetic Retinopathy severity from eye images — 81.56% accuracy
+✅  Identify cancerous skin lesions from dermoscopy images — 78% accuracy
 ✅  Visualize AI decisions with Grad-CAM heatmaps
 ✅  Role-based access for Doctors and Patients
 ✅  Generate downloadable PDF medical reports
 ✅  Track patient scan history over time
-✅  Deployable with Docker in any environment
+✅  Deploy entire platform with a single Docker command
 
 ---
 
@@ -265,12 +281,13 @@ Once the backend is running, visit:
 | Version | Description |
 |---|---|
 | `v1.0.0` | Initial release — full pipeline: scan upload → AI diagnosis → PDF report |
+| `v2.0.0` | All 3 models trained and integrated, UI redesign, Docker deployment working |
 
 ---
 
 ## 👤 Author
 
-**Charanpreet Singh**  
+**Charanpreet Singh**
 B.Tech CSE (AIML)
 
 [![GitHub](https://img.shields.io/badge/GitHub-charanpreetSingh123-24292e?style=flat-square&logo=github)](https://github.com/charanpreetSingh123)
