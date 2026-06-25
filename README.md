@@ -301,6 +301,6 @@ B.Tech CSE (AIML)
 
 <br/>
 
-*If this project helped you, consider giving it a ⭐ on GitHub!*
+*If this project helped you, consider giving it a ⭐ on GitHub :)*
 
 </div>
